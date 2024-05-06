@@ -32,7 +32,7 @@ function draw() {
   }
   
   particles.forEach((particle) => {
-    particle.update(); // Fixed typo: "particels" to "particles"
+    particle.update(); 
     particle.draw();
   });
 }
@@ -88,7 +88,7 @@ class Particle {
      }
     
     
-    // Add forces to the position
+    
     this.x += totalForce.x;
     this.y += totalForce.y;
   }

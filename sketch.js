@@ -7,6 +7,7 @@ const MAX_FORCE = 10;
 const MIN_FORCE = 0;
 let storyText = [];
 let particles = [];
+let coverfont, storyfont;
 
 function preload() {
     coverOneImage = loadImage("image/gunandrose.png"); 
@@ -16,6 +17,8 @@ function preload() {
     Victims = loadImage("victims.jpg");
     img = loadImage('victims.jpg');
     storyText = loadStrings('texas_shooting.txt');
+    coverfont = loadFont('font/AVELIRE.otf')
+    storyfont = loadFont('font/Chopin-Light.ttf')
 }
 
 function setup() {
@@ -164,7 +167,7 @@ class PageThree {
   textSize(40);
   
   for (let i = 0; i < storyText.length; i++ ){
-  text(storyText[i], 20, 20 + i *100,width-70);
+  text(storyText[i], 20, 80 + i *100,width-70);
   }
         this.particles.forEach((particle) => {
           

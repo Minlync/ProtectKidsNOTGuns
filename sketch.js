@@ -7,7 +7,7 @@ const MAX_FORCE = 10;
 const MIN_FORCE = 0;
 let storyText = [];
 let particles = [];
-let coverfont, storyfont;
+let coverfont, storyfont,shoot;
 
 function preload() {
     coverOneImage = loadImage("image/gunandrose.png"); 
@@ -19,6 +19,7 @@ function preload() {
     storyText = loadStrings('texas_shooting.txt');
     coverfont = loadFont('font/AVELIRE.otf')
     storyfont = loadFont('font/Chopin-Light.ttf')
+    shoot = loadSound('sound/gunshot.ogg')
 }
 
 function setup() {
@@ -86,14 +87,26 @@ class PageTwo {
     display() {
         fill(255);
         textSize(45);
-        text("Welcome to Page two", 150, 450);
+        // text("Welcome to Page two", 150, 450);
         for (let i = 0; i < 3; i++) { 
-            let offsetX = i * 200; 
-            image(this.rose, 200 + offsetX, 200, 200, 200);
+            let offsetX = i * 180; // spacing
+            let scaledRoseWidth = 180; // orginal size
+            let scaledRoseHeight = 180; // orginal size
+           
+            // hover effect
+            if (mouseX >= 100 + offsetX && mouseX <= 100 + offsetX + scaledRoseWidth &&
+                mouseY >= 200 && mouseY <= 200 + scaledRoseHeight) {
+                scaledRoseWidth = 220; // Increase the width
+                scaledRoseHeight = 220; // Increase the height
+                this.roseHovered = true;  // mouse is hover rose
+            } else {
+                this.roseHovered = false; // Mouse is not over the rose
+            }
+            image(this.rose, 100 + offsetX, 200, scaledRoseWidth, scaledRoseHeight); // Adjust size
         }
-        let constrainedMouseX = constrain(mouseX, 0, 800 - 350);
-        let constrainedMouseY = constrain(mouseY, 0, 600 - 450);
-        image(this.aim, constrainedMouseX, constrainedMouseY, 650, 500);
+        let constrainedMouseX = constrain(mouseX-400, -200, 800 - 600);
+        let constrainedMouseY = constrain(mouseY-200, 0, 600 - 450);
+        image(this.aim, constrainedMouseX, constrainedMouseY, img.width, 500);
         for (let i = 0; i < 3; i++) {
             let offsetX = i * 80;
             image(this.bullet, 550 + offsetX, 40, 60, 30);
@@ -385,6 +398,7 @@ function mousePressed() {
     if (currentScene instanceof CoverOne) {
         currentScene.mousePressed();  
     } else if (currentScene instanceof PageTwo) {
+        shoot.play();
         currentScene = new PageThree();
     } else if (currentScene instanceof PageThree){
         currentScene = new PageFour(); 

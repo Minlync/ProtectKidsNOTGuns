@@ -7,7 +7,7 @@ const MAX_FORCE = 10;
 const MIN_FORCE = 0;
 let storyText = [];
 let particles = [];
-let coverfont, storyfont, shoot,protectkids;
+let shoot,protectkids,autoText,pg6Img;
 
 function preload() {
   coverOneImage = loadImage("image/cover.jpg");
@@ -17,9 +17,10 @@ function preload() {
   Victims = loadImage("image/victims.jpg");
   img = loadImage('image/victims.jpg');
   storyText = loadStrings('texas_shooting.txt');
-  storyfont = loadFont('font/Chopin-Light.ttf')
   shoot = loadSound('sound/gunshot.ogg');
   protectkids = loadImage ('image/page5.jpeg');
+  autoText = loadStrings ('page6.txt');
+  pg6Img = loadImage('image/newspaper.png')
 }
 
 function setup() {
@@ -419,16 +420,45 @@ class PageFive {
 
 }
 
+// auto typing script for story telling
+//resouce:https://everytownresearch.org/maps/gunfire-on-school-grounds/
 class PageSix {
   constructor() { 
+
+  this.new1 = pg6Img;
+  this.string = 'When it comes to how American children are exposed to gun violence, gunfire at schools is just the tip of the iceberg every year, nearly 4,000 children and teens are shot and killed and 15,000 more are shot and injured. An estimated 3 million children in the US are exposed to shootings per year' ;
+  
+  //  this.string = autoText;
+
+  this.currentCharacter = 0;
+ 
 
   }
 
   display() {
+
+
+    let currentString = this.string.substring(0, this.currentCharacter);
+    let fade;
+    
+    push();
     fill(255);
     noStroke();
     textSize(18);
-    text("Page6", 20, 20, 700);
+
+    text(currentString, 50, 400, 700);
+    pop();
+    
+    
+    // make it draw
+    this.currentCharacter += 0.2;
+
+    if (this.currentCharacter > this.string.length) {
+      this.currentCharacter = this.string.length;
+    }
+
+    // newspape fadein fadeout
+    image(this.new1, 0, 0, img.width, img.heigh);
   }
 }
 

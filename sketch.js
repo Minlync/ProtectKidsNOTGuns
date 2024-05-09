@@ -21,7 +21,9 @@ function preload() {
   protectkids = loadImage ('image/page5.jpeg');
   autoText = loadStrings ('page6.txt');
   pg6Img = loadImage('image/newspaper.png')
+  pg6Img2 = loadImage('image/newspaper2.png')
 }
+
 
 function setup() {
   createCanvas(800, 600);
@@ -426,16 +428,20 @@ class PageSix {
   constructor() { 
 
   this.new1 = pg6Img;
+  this.new2 = pg6Img2;
   this.string = 'When it comes to how American children are exposed to gun violence, gunfire at schools is just the tip of the iceberg every year, nearly 4,000 children and teens are shot and killed and 15,000 more are shot and injured. An estimated 3 million children in the US are exposed to shootings per year' ;
   
   //  this.string = autoText;
 
   this.currentCharacter = 0;
   //fade in effect
-  this.fadeInStarted = false;
+  this.fadeInStarted1 = false; 
+  this.fadeInStarted2 = false;
   // fade in after 3 seconds
   this.fadeInDuration = 3000; 
-  this.fadeStartTime = millis(); 
+  this.fadeStartTime1 = millis(); 
+  this.fadeStartTime2 = 0;
+
  }
 
   display() {
@@ -450,26 +456,40 @@ class PageSix {
 
     text(currentString, 50, 400, 700);
     pop();
-
-    // fade-in image after 3 seconds
-    if (!this.fadeInStarted && millis() - this.fadeStartTime > this.fadeInDuration) {
-      this.fadeInStarted = true;
-    }
-
-    if (this.fadeInStarted) {
-      let fadeInAlpha = map(millis() - this.fadeStartTime - this.fadeInDuration, 0, 1000, 0, 255); // Fade in over 1 second
-      fadeInAlpha = constrain(fadeInAlpha, 0, 255);
-      tint(255, fadeInAlpha); // apply alpha to the image
-      image(this.new1, 0, 0, img.width, img.heigh);
-    }
-    
-    
-    // make it draw
+ 
+       // make it draw
     this.currentCharacter += 0.2;
 
     if (this.currentCharacter > this.string.length) {
       this.currentCharacter = this.string.length;
     }
+    // fade-in image after 3 seconds
+    // fade-in first image after 3 seconds
+    if (!this.fadeInStarted1 && millis() - this.fadeStartTime1 > this.fadeInDuration) {
+      this.fadeInStarted1 = true;
+      this.fadeStartTime2 = millis(); 
+    }
+
+    if (this.fadeInStarted1) {
+      let fadeInAlpha = map(millis() - this.fadeStartTime1 - this.fadeInDuration, 0, 1000, 0, 255); 
+      fadeInAlpha = constrain(fadeInAlpha, 0, 255);
+      tint(255, fadeInAlpha); 
+      image(this.new1, 0, 0, img.width, img.heigh);
+    }
+
+    // fade-in second image after 2 seconds from the start of first fade-in
+    if (this.fadeInStarted1 && !this.fadeInStarted2 && millis() - this.fadeStartTime2 > 2000) {
+      this.fadeInStarted2 = true;
+    }
+
+    if (this.fadeInStarted2) {
+      let fadeInAlpha2 = map(millis() - this.fadeStartTime2, 0, 1000, 0, 255); 
+      fadeInAlpha2 = constrain(fadeInAlpha2, 0, 255);
+      tint(255, fadeInAlpha2); 
+      image(this.new2, 0, 0, img.width, img.heigh);
+    }
+    
+  
 
     // newspape fadein fadeout
     // image(this.new1, 0, 0, img.width, img.heigh);

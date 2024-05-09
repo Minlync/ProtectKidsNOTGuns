@@ -10,9 +10,9 @@ let particles = [];
 let coverfont, storyfont,shoot;
 
 function preload() {
-    coverOneImage = loadImage("image/gunandrose.png"); 
-    page2Aim = loadImage("image/aim.png");
-    roseforpg2 = loadImage("image/rose2.png");
+    coverOneImage = loadImage("image/cover.jpg"); 
+    page2Aim = loadImage("image/aim2.png");
+    heartforpg2 = loadImage("image/heart.png");
     Bullet = loadImage("image/bulle.png");
     Victims = loadImage("victims.jpg");
     img = loadImage('victims.jpg');
@@ -32,7 +32,7 @@ function setup() {
 function draw() {
     background(greybgcolor);
     currentScene.display();
-    if (currentScene instanceof PageFour) {
+    if (currentScene instanceof PageFive) {
         currentScene.update();
     }
 }
@@ -59,10 +59,13 @@ class CoverOne {
     }
 
     display() {
-        let x = (width - 600) / 2;
-        let y = (height - 480 - 100) / 2;
-        image(this.img, x, y, 600, 480); 
+        // let x = (width - 600) / 2;
+        // let y = (height - 480 - 100) / 2;
+        let x =0 ;
+        let y =0 ;
+        image(this.img, x, y, 800, 600); 
         fill(this.buttonColor);
+        noStroke();
         rect(this.button.x, this.button.y, this.button.w, this.button.h);
         fill(255);
         textSize(25);
@@ -80,8 +83,9 @@ class CoverOne {
 class PageTwo {
     constructor() {
         this.aim = page2Aim;
-        this.rose = roseforpg2;
+        this.heart = heartforpg2;
         this.bullet = Bullet;
+        // to replace my mouse
     }
 
     display() {
@@ -102,11 +106,11 @@ class PageTwo {
             } else {
                 this.roseHovered = false; // Mouse is not over the rose
             }
-            image(this.rose, 100 + offsetX, 200, scaledRoseWidth, scaledRoseHeight); // Adjust size
+            image(this.heart, 100 + offsetX, 200, scaledRoseWidth, scaledRoseHeight); // Adjust size
         }
-        let constrainedMouseX = constrain(mouseX-400, -200, 800 - 600);
-        let constrainedMouseY = constrain(mouseY-200, 0, 600 - 450);
-        image(this.aim, constrainedMouseX, constrainedMouseY, img.width, 500);
+        let constrainedMouseX = constrain(mouseX-150, 0, 600);
+        let constrainedMouseY = constrain(mouseY-150, 0, 600);
+        image(this.aim, constrainedMouseX, constrainedMouseY, 300,300);
         for (let i = 0; i < 3; i++) {
             let offsetX = i * 80;
             image(this.bullet, 550 + offsetX, 40, 60, 30);
@@ -138,14 +142,14 @@ class Particle {
         let distanceToTarget = fromParticleToTarget.mag();
         let distanceToMouse = fromMouseToParticle.mag();
 
-        if (distanceToMouse < 100) {
-            let repulsionForce = map(distanceToMouse, 0, 100, MAX_FORCE, MIN_FORCE);
+        if (distanceToMouse < 150) {
+            let repulsionForce = map(distanceToMouse, 0, 200, MAX_FORCE, MIN_FORCE);
             fromMouseToParticle.setMag(repulsionForce);
             totalForce.add(fromMouseToParticle);
         }
 
-        if (distanceToMouse > 100) {
-            let attractionForce = map(distanceToTarget, 0, 100, MIN_FORCE, MAX_FORCE);
+        if (distanceToMouse > 250) {
+            let attractionForce = map(distanceToTarget, 10, 200, MIN_FORCE, MAX_FORCE);
             fromParticleToTarget.setMag(attractionForce);
             totalForce.add(fromParticleToTarget);
         }
@@ -177,10 +181,11 @@ class PageThree {
     display() {
         background(0);
        fill(255);
-  textSize(40);
+
+      textSize(20);
   
   for (let i = 0; i < storyText.length; i++ ){
-  text(storyText[i], 20, 80 + i *100,width-70);
+  text(storyText[i], 80, height/2 + i *100,width-150);
   }
         this.particles.forEach((particle) => {
           
@@ -191,7 +196,50 @@ class PageThree {
     }
 }
 
+//back into shooting agian
 class PageFour {
+
+  constructor() {
+    this.aim = page2Aim;
+    this.heart = heartforpg2;
+    this.bullet = Bullet;
+    // to replace my mouse
+}
+
+display() {
+    fill(255);
+    textSize(45);
+    // text("Welcome to Page two", 150, 450);
+    for (let i = 0; i < 2; i++) { 
+        let offsetX = i * 180; // spacing
+        let scaledRoseWidth = 180; // orginal size
+        let scaledRoseHeight = 180; // orginal size
+       
+        // hover effect
+        if (mouseX >= 100 + offsetX && mouseX <= 100 + offsetX + scaledRoseWidth &&
+            mouseY >= 200 && mouseY <= 200 + scaledRoseHeight) {
+            scaledRoseWidth = 220; // Increase the width
+            scaledRoseHeight = 220; // Increase the height
+            this.roseHovered = true;  // mouse is hover rose
+        } else {
+            this.roseHovered = false; // Mouse is not over the rose
+        }
+        image(this.heart, 200 + offsetX, 200, scaledRoseWidth, scaledRoseHeight); // Adjust size
+    }
+    let constrainedMouseX = constrain(mouseX-150, 0, 600);
+    let constrainedMouseY = constrain(mouseY-150, 0, 600);
+    image(this.aim, constrainedMouseX, constrainedMouseY, 300,300);
+    //bullets
+    for (let i = 0; i < 2; i++) {
+        let offsetX = i * 80;
+        image(this.bullet, 600 + offsetX, 40, 60, 30);
+    }
+}
+
+}
+
+
+class PageFive {
     constructor() {
         this.textx = 50;
         this.texty = 50;
@@ -379,7 +427,7 @@ class PageFour {
     }
 }
 
-class PageFive {
+class PageSix {
     constructor() {}
 
     display() {
@@ -403,6 +451,7 @@ function mousePressed() {
     } else if (currentScene instanceof PageThree){
         currentScene = new PageFour(); 
        } else if (currentScene instanceof PageFour){
+        shoot.play();
         currentScene = new PageFive(); 
       
       currentScene.startAnimation = true; 

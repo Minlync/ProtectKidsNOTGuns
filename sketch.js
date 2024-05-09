@@ -431,16 +431,18 @@ class PageSix {
   //  this.string = autoText;
 
   this.currentCharacter = 0;
- 
-
-  }
+  //fade in effect
+  this.fadeInStarted = false;
+  // fade in after 3 seconds
+  this.fadeInDuration = 3000; 
+  this.fadeStartTime = millis(); 
+ }
 
   display() {
 
 
     let currentString = this.string.substring(0, this.currentCharacter);
     let fade;
-    
     push();
     fill(255);
     noStroke();
@@ -448,6 +450,18 @@ class PageSix {
 
     text(currentString, 50, 400, 700);
     pop();
+
+    // fade-in image after 3 seconds
+    if (!this.fadeInStarted && millis() - this.fadeStartTime > this.fadeInDuration) {
+      this.fadeInStarted = true;
+    }
+
+    if (this.fadeInStarted) {
+      let fadeInAlpha = map(millis() - this.fadeStartTime - this.fadeInDuration, 0, 1000, 0, 255); // Fade in over 1 second
+      fadeInAlpha = constrain(fadeInAlpha, 0, 255);
+      tint(255, fadeInAlpha); // apply alpha to the image
+      image(this.new1, 0, 0, img.width, img.heigh);
+    }
     
     
     // make it draw
@@ -458,7 +472,7 @@ class PageSix {
     }
 
     // newspape fadein fadeout
-    image(this.new1, 0, 0, img.width, img.heigh);
+    // image(this.new1, 0, 0, img.width, img.heigh);
   }
 }
 

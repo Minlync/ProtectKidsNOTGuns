@@ -7,7 +7,7 @@ const MAX_FORCE = 10;
 const MIN_FORCE = 0;
 let storyText = [];
 let particles = [];
-let shoot,protectkids,autoText,pg6Img;
+let shoot, protectkids, autoText, pg6Img;
 
 function preload() {
   coverOneImage = loadImage("image/cover.jpg");
@@ -18,8 +18,8 @@ function preload() {
   img = loadImage('image/victims.jpg');
   storyText = loadStrings('texas_shooting.txt');
   shoot = loadSound('sound/gunshot.ogg');
-  protectkids = loadImage ('image/page5.jpeg');
-  autoText = loadStrings ('page6.txt');
+  protectkids = loadImage('image/page5.jpeg');
+  autoText = loadStrings('page6.txt');
   pg6Img = loadImage('image/newspaper.png')
   pg6Img2 = loadImage('image/newspaper2.png')
 }
@@ -161,9 +161,6 @@ class Particle {
     fill(this.color);
     noStroke();
     ellipse(this.x, this.y, PARTICLE_SIZE);
-
-
-
   }
 }
 
@@ -262,11 +259,11 @@ class PageFive {
     // here is the data of gunshoots in schools
 
     fill(this.rectColor);
-    image(this.background, 0,0, 800, 600);
+    image(this.background, 0, 0, 800, 600);
     noStroke();
     textSize(18);
     text("There have been 783 shootings with deaths or injuries at elementary and cecondary schools since 2010", this.textx, 20, 600);
-    
+
     fill(this.rectColor);
     textSize(18);
     text("2010-11", this.datax - 80, 100);
@@ -328,9 +325,6 @@ class PageFive {
     textSize(18);
     text("2021-23", this.datax - 80, 510 + this.rectHeight);
     rect(this.datax, 80 + 200 + 80 + 160, this.rectWidth12, this.rectHeight);
-   
-
-    
   }
 
   update() {
@@ -422,31 +416,68 @@ class PageFive {
 
 }
 
+
+class PageSix {
+
+  constructor() {
+    this.aim = page2Aim;
+    this.heart = heartforpg2;
+    this.bullet = Bullet;
+  }
+
+    display() {
+    fill(255);
+    textSize(45);
+    // text("Welcome to Page two", 150, 450);
+    for (let i = 0; i < 1; i++) {
+      let offsetX = i * 180; // spacing
+      let scaledRoseWidth = 180; // orginal size
+      let scaledRoseHeight = 180; // orginal size
+
+      // hover effect
+      if (mouseX >= 100 + offsetX && mouseX <= 100 + offsetX + scaledRoseWidth &&
+        mouseY >= 200 && mouseY <= 200 + scaledRoseHeight) {
+        scaledRoseWidth = 220; // Increase the width
+        scaledRoseHeight = 220; // Increase the height
+        this.roseHovered = true;  // mouse is hover rose
+      } else {
+        this.roseHovered = false; // Mouse is not over the rose
+      }
+      image(this.heart, 250 + offsetX, 200, scaledRoseWidth, scaledRoseHeight); // Adjust size
+    }
+    let constrainedMouseX = constrain(mouseX - 150, 0, 600);
+    let constrainedMouseY = constrain(mouseY - 150, 0, 600);
+    image(this.aim, constrainedMouseX, constrainedMouseY, 300, 300);
+    //bullets
+    for (let i = 0; i < 1; i++) {
+      let offsetX = i * 80;
+      image(this.bullet, 600 + offsetX, 40, 60, 30);
+    }
+  }
+
+
+}
+
 // auto typing script for story telling
 //resouce:https://everytownresearch.org/maps/gunfire-on-school-grounds/
-class PageSix {
-  constructor() { 
+class PageSeven {
+  constructor() {
+    this.new1 = pg6Img;
+    this.new2 = pg6Img2;
+    this.string = 'When it comes to how American children are exposed to gun violence, gunfire at schools is just the tip of the iceberg every year, nearly 4,000 children and teens are shot and killed and 15,000 more are shot and injured. An estimated 3 million children in the US are exposed to shootings per year';
+    //  this.string = autoText;
+    this.currentCharacter = 0;
+    //fade in effect
+    this.fadeInStarted1 = false;
+    this.fadeInStarted2 = false;
+    // fade in after 3 seconds
+    this.fadeInDuration = 3000;
+    this.fadeStartTime1 = millis();
+    this.fadeStartTime2 = 0;
 
-  this.new1 = pg6Img;
-  this.new2 = pg6Img2;
-  this.string = 'When it comes to how American children are exposed to gun violence, gunfire at schools is just the tip of the iceberg every year, nearly 4,000 children and teens are shot and killed and 15,000 more are shot and injured. An estimated 3 million children in the US are exposed to shootings per year' ;
-  
-  //  this.string = autoText;
-
-  this.currentCharacter = 0;
-  //fade in effect
-  this.fadeInStarted1 = false; 
-  this.fadeInStarted2 = false;
-  // fade in after 3 seconds
-  this.fadeInDuration = 3000; 
-  this.fadeStartTime1 = millis(); 
-  this.fadeStartTime2 = 0;
-
- }
+  }
 
   display() {
-
-
     let currentString = this.string.substring(0, this.currentCharacter);
     let fade;
     push();
@@ -456,8 +487,8 @@ class PageSix {
 
     text(currentString, 50, 400, 700);
     pop();
- 
-       // make it draw
+
+    // make it draw
     this.currentCharacter += 0.2;
 
     if (this.currentCharacter > this.string.length) {
@@ -467,13 +498,13 @@ class PageSix {
     // fade-in first image after 3 seconds
     if (!this.fadeInStarted1 && millis() - this.fadeStartTime1 > this.fadeInDuration) {
       this.fadeInStarted1 = true;
-      this.fadeStartTime2 = millis(); 
+      this.fadeStartTime2 = millis();
     }
 
     if (this.fadeInStarted1) {
-      let fadeInAlpha = map(millis() - this.fadeStartTime1 - this.fadeInDuration, 0, 1000, 0, 255); 
+      let fadeInAlpha = map(millis() - this.fadeStartTime1 - this.fadeInDuration, 0, 1000, 0, 255);
       fadeInAlpha = constrain(fadeInAlpha, 0, 255);
-      tint(255, fadeInAlpha); 
+      tint(255, fadeInAlpha);
       image(this.new1, 0, 0, img.width, img.heigh);
     }
 
@@ -483,21 +514,13 @@ class PageSix {
     }
 
     if (this.fadeInStarted2) {
-      let fadeInAlpha2 = map(millis() - this.fadeStartTime2, 0, 1000, 0, 255); 
+      let fadeInAlpha2 = map(millis() - this.fadeStartTime2, 0, 1000, 0, 255);
       fadeInAlpha2 = constrain(fadeInAlpha2, 0, 255);
-      tint(255, fadeInAlpha2); 
+      tint(255, fadeInAlpha2);
       image(this.new2, 0, 0, img.width, img.heigh);
     }
-    
-  
-
-    // newspape fadein fadeout
-    // image(this.new1, 0, 0, img.width, img.heigh);
   }
 }
-
-
-
 // switch
 
 function mousePressed() {
@@ -511,9 +534,11 @@ function mousePressed() {
   } else if (currentScene instanceof PageFour) {
     shoot.play();
     currentScene = new PageFive();
-  }else if (currentScene instanceof PageFive) {
+  } else if (currentScene instanceof PageFive) {
     currentScene = new PageSix();
+  }else if (currentScene instanceof PageSix) {
+    currentScene = new PageSeven();
+    shoot.play();
     currentScene.startAnimation = true;
-
   }
 }

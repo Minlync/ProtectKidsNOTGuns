@@ -15,6 +15,8 @@ Also, I hope kids can live in a not gun, not violence environment.
 This is an interactive web-based game simulating gun shooting. I utilized a particle system function on page two to process the victim image. When user mouse hover the screen, particals will spreading out with user's mouse but will garthing back. The story text will appear under the partical. My purpose in here is to simulate an effect as a scar.
 These tragedies may be covered up over time, but they remain, like scars.
 and employed Object-Oriented Programming to organize the pages. When the user presses the mouse, it will navigate to the next page, and the shooting sound can play.
+![Screenshot 2024-05-10 at 3 19 35 PM](https://github.com/Minlync/ProtectKidsNOTGuns/assets/93282772/ce12e7cf-3dc7-4dc4-8096-81736822d289)
+
 
 Also, I used the time millis function to control the image fade-in and fade-out effects.
 

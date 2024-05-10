@@ -23,15 +23,12 @@ function preload() {
   pg6Img = loadImage('image/newspaper.png')
   pg6Img2 = loadImage('image/newspaper2.png')
 }
-
-
 function setup() {
   createCanvas(800, 600);
   greybgcolor = color(20, 20, 20);
   currentScene = new CoverOne(coverOneImage);
   spawnParticles(); // Initialize particles
 }
-
 function draw() {
   background(greybgcolor);
   currentScene.display();
@@ -227,9 +224,7 @@ class PageFour {
   }
 
 }
-
 // data support source: National Center for Education Statistics
-
 class PageFive {
   constructor() {
     this.textx = 50;
@@ -416,7 +411,6 @@ class PageFive {
 
 }
 
-
 class PageSix {
 
   constructor() {
@@ -476,8 +470,7 @@ class PageSeven {
     this.fadeStartTime2 = 0;
 
   }
-
-  display() {
+   display() {
     let currentString = this.string.substring(0, this.currentCharacter);
     let fade;
     push();
@@ -543,7 +536,7 @@ function mousePressed() {
   }
 }
 
-//resouce: https://www.wsj.com/articles/uvalde-texas-school-shooting-victims-11653438058
+//resouces: https://www.wsj.com/articles/uvalde-texas-school-shooting-victims-11653438058
 //https://www.britannica.com/event/Sandy-Hook-Elementary-School-shooting
 //https://usafacts.org/articles/the-latest-government-data-on-school-shootings/
 //https://www.youtube.com/watch?v=_gz8FMduwRc

@@ -542,3 +542,9 @@ function mousePressed() {
     currentScene.startAnimation = true;
   }
 }
+
+//resouce: https://www.wsj.com/articles/uvalde-texas-school-shooting-victims-11653438058
+//https://www.britannica.com/event/Sandy-Hook-Elementary-School-shooting
+//https://usafacts.org/articles/the-latest-government-data-on-school-shootings/
+//https://www.youtube.com/watch?v=_gz8FMduwRc
+//https://editor.p5js.org/remarkability/sketches/rtM08miUD
